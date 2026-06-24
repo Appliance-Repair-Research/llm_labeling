@@ -35,15 +35,6 @@ class GPTClient:
         )
         return response.choices[0].message.content.strip().lower()
 
-    def get_response_sd(self, messages: list, max_tokens: int = 10, temperature: float = 0):
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=temperature,
-            max_completion_tokens=max_tokens,
-        )
-        return response.choices[0].message.content.strip()
-
     def create_batch(self, requests: list, metadata: dict | None = None):
         batch_file_path = None
         try:

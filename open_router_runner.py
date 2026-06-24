@@ -29,7 +29,7 @@ class OpenRouterClient:
     def __init__(
         self,
         api_key: str | None = None,
-        model: str = "meta-llama/llama-3.1-8b-instruct",
+        model: str = "meta-llama/llama-3.3-70b-instruct",
     ):
         if api_key is None:
             load_config_env(os.path.join(CUR_DIR, "config.env"))
@@ -78,7 +78,6 @@ if __name__ == "__main__":
     client = OpenRouterClient(
         model="meta-llama/llama-3.3-70b-instruct"
         # model="anthropic/claude-opus-4.7"
-        # model="meta-llama/llama-3.1-8b-instruct"
     )
 
     rows = df.iloc[start:] if limit is None else df.iloc[start:start + limit]
