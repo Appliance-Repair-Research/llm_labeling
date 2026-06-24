@@ -12,6 +12,7 @@ class GPTClient:
         self.client = OpenAI(api_key=api_key)
         self.model = "gpt-5.2"
 
+    @staticmethod
     def load_config_env(path: str = "config.env"):
         if not os.path.exists(path):
             return

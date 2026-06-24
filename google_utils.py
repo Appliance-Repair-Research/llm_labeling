@@ -6,7 +6,7 @@ import time
 
 from google import genai
 from google.genai import types
-from prompt import prompt
+from prompt2 import prompt
 from google.genai.errors import ServerError
 
 CUR_DIR = os.path.dirname(__file__)
@@ -142,7 +142,7 @@ class GeminiClient:
 if __name__ == "__main__":
     import pandas as pd
 
-    input_path = os.path.join(CUR_DIR, "data", "call_data_rw.csv")
+    input_path = os.path.join(CUR_DIR, "data", "call_data_revised.csv")
     result_column = "Gemini Result"
     requests_per_minute = 800
     start = int(sys.argv[1]) if len(sys.argv) > 1 else 0

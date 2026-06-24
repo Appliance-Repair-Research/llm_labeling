@@ -2,11 +2,12 @@ import json
 import os
 
 import pandas as pd
+from prompt import prompt
 
 from openai_utils import GPTClient
 
 
-INPUT_PATH = "data/call_data_rw.csv"
+INPUT_PATH = "data/call_data_revised.csv"
 BATCH_STATE_PATH = "data/call_data_ai_batches.json"
 BATCH_ID = "batch_69f28fd9891c81909070b1dcd1020d29"
 MAX_BATCH_TOKENS = 800_000
@@ -32,45 +33,13 @@ def save_state(state: dict):
 
 
 def build_messages(transcript: str) -> list:
-    prompt = (
-        "Classify the outcome of this conversation in one of these categories in lower case, your response should only"
-        "include classification category, but nothing else:\n"
-        "book, no book, wrong, misc, recall, business. When you analyze context of text, beware that text contain typos.\n\n"
-        "Definitions of categories you should strictly use in your answer:\n"
-        "- book: potential customer books appointment with us, appointment date and time is set and customer approves "
-        "it verbally during the call. If an appointment is clearly scheduled and accepted, classify as book even if there "
-        "are minor unresolved details, \n"
-        "- no book: potential customer that doesn’t decide to book with us during the call mainly due to following reasons"
-        " 1)we don't have available slot, 2)customer is willing to pay service call fee but finds it expensive, "
-        "3)agent doesn't handle call in a good manner and customer decides not to book with us, 4) customer wants to call "
-        "other companies before deciding 5) potential customer receives information and decides to call back later "
-        "6)customer schedules appointment but changes their mind about repair after learning cost of the service" 
-        "- wrong: not a potential customer, definition of not a potential customer is following:\n"
-        "  1) customer is outside our coverage area\n"
-        "  2) customer is looking for service we don't provide, such as but not limited to tv repair, air conditioner etc\n"
-        "  3) appliance is under warranty even if customer is unsure, as long as agent says it is very likely or definitely in warranty\n"
-        "  4) wants to bring appliance to store\n"
-        "  5) customer clearly refuses any paid visit/diagnostic and only wants free phone troubleshooting help, classify as wrong.\n"
-        "  6) wants phone support over the phone instead of paying for coming and checking appliance\n"
-        "  7) Important:-agent explicitly says that customer has called the wrong number or we do not provide service or we don't provide phone support\n"
-        "  8) or any other reason clearly not a potential customer. "
-        "  9) caller is from another business trying to sell something to us\n"
-        "  10) caller prefers to speak in language other than English\n"
-        "  11) caller is not decision maker"
-        "  12) customer ends up calling back again accidentally and informs that they have already talked."
-        "- misc: cannot be categorized or conversation is too short/insufficient. If the call ends before enough information "
-        "is collected to know whether the caller is a valid lead, classify as misc. This includes when customer abruptly ends the call before answering "
-        "necessary questions to identify if they are potential customer unless customer hangs up because they are no longer interested in service\n\n"
-        "Conversation:\n"
-        f"{transcript}"
-    )
     return [
         {"role": "system", "content": "You are a classification assistant for appliance repair company. "
                                       "Almost all calls with potential customers starts with asking customer their zip code,"
                                       " then asking if appliance is under warranty (we don't do warranty service, "
                                       "then asking about appliance type, then asking about appliance issue, these questions"
                                       "should be answered directly or indirectly during the call to identify potential customer "},
-        {"role": "user", "content": prompt},
+        {"role": "user", "content": prompt+  "Conversation:\n" + f"{transcript}"},
     ]
 
 

@@ -5,7 +5,7 @@ import time
 import pandas as pd
 from openai import OpenAI
 
-from prompt import prompt
+from prompt2 import prompt
 
 CUR_DIR = os.path.dirname(__file__)
 
@@ -59,8 +59,9 @@ class OpenRouterClient:
 
 if __name__ == "__main__":
 
-    input_path = os.path.join(CUR_DIR, "data", "call_data_rw.csv")
+    input_path = os.path.join(CUR_DIR, "data", "call_data_revised.csv")
     result_column = "LLAMA Result"
+    # result_column = "Claude Result"
 
     requests_per_minute = 1000
 
@@ -76,6 +77,7 @@ if __name__ == "__main__":
 
     client = OpenRouterClient(
         model="meta-llama/llama-3.3-70b-instruct"
+        # model="anthropic/claude-opus-4.7"
         # model="meta-llama/llama-3.1-8b-instruct"
     )
 

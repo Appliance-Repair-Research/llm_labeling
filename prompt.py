@@ -1,7 +1,7 @@
 prompt = (
    "Classify the outcome of this conversation in one of these categories in lower case, your response should only"
    "include classification category, but nothing else:\n"
-   "book, no book, wrong, misc, recall, business. When you analyze context of text, beware that text contain typos.\n\n"
+   "book, no book, wrong, misc. When you analyze context of text, beware that text contain typos.\n\n"
    "Definitions of categories you should strictly use in your answer:\n"
    "- book: potential customer books appointment with us, appointment date and time is set and customer approves "
    "it verbally during the call. If an appointment is clearly scheduled and accepted, classify as book even if there "
